@@ -94,6 +94,7 @@ $conn->query($sql);
 $sql = "ALTER TABLE knihy_update RENAME TO knihy";
 $conn->query($sql);
 echo "Tabulka knihy bola aktualizovana<br>";
+echo"<a href='index.php'>Naspat</a>";
 
 // Commit transaction
 $conn->commit();

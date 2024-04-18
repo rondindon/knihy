@@ -127,7 +127,7 @@
 </head>
 <body>
 <div id="sidebar">
-        <h2>Kategorie</h2>
+        <h2>Kategórie</h2>
         <ul id="category-list">
             <li><a class="category-link" href="#" data-category="Učebnice pre stredné školy">Učebnice pre stredné školy</a></li>
             <li><a class="category-link" href="#" data-category="Učebnice pre autoškoly">Učebnice pre autoškoly</a></li>
@@ -222,16 +222,18 @@ document.addEventListener("DOMContentLoaded", function() {
     fetchItems(categoryFromUrl, currentPage);
 
     document.getElementById("prev-page").addEventListener("click", function() {
-        if (currentPage > 1) {
-            currentPage--;
-            fetchItems(document.getElementById("category-title").innerText, currentPage);
+        currentPage--;
+        fetchItems(document.getElementById("category-title").innerText, currentPage);
+        if(currentPage === 0){
+            currentPage = 7;
         }
+
     });
 
     document.getElementById("next-page").addEventListener("click", function() {
         currentPage++;
         fetchItems(document.getElementById("category-title").innerText, currentPage);
-        if(currentPage === 7){
+        if(currentPage >= 7){
             currentPage = 1;
         }
     });
