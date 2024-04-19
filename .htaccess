@@ -7,7 +7,10 @@ RewriteRule ^update$ update.php [L]
 # Rewrite rule for product_details.php
 RewriteRule ^produkt/(\d+)$ product_details.php?id=$1 [QSA,L]
 
-# Rewrite rule for category URLs
+# Rewrite rule for category URLs without diacritics
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^/]+)/?$ index.php?category=$1 [QSA,L]
+RewriteRule ^([^/]+)/?$ index.php?category=$1 [NE,QSA,L]
+
+# Rewrite rule for the default category without diacritics
+RewriteRule ^$ index.php?category=default [QSA,L]

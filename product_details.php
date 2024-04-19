@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product Details</title>
+<title><?php echo isset($productDetails['nazov']) ? $productDetails['nazov'] : 'Product Details'; ?></title>
 <style>
     body {
         font-family: Arial, sans-serif;
-        background-color: rgb(220, 222, 250);
+        background-color: rgb(145, 149, 219);
     }
     #sidebar {
         margin-top: 50px;
@@ -18,8 +18,8 @@
         list-style: none;
         border-radius: 15px;
         height: 100vh;
-        border: 1px solid rgba(168, 173, 237,.7);
-        background-color: rgb(240, 241, 250);
+        border: 1px solid rgba(168, 173, 237);;
+        background-color: rgb(218, 218, 224);
     }
     #sidebar h2{
         font-size: 2em;
@@ -43,14 +43,14 @@
     /* Style for product details */
     .product-details {
         margin-top: 2rem;
-        border: 1px solid rgba(168, 173, 237,.7);;
+        border: 1px solid rgba(168, 173, 237);;
         border-radius: 5px;
         padding: 20px;
         background-color: #f9f9f9;
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: rgb(240, 241, 250);
+        background-color: rgb(218, 218, 224);
     }
     /* Style for product image */
     .product-details img {
@@ -85,7 +85,7 @@
     }
 
     .product-info a {
-        color: rgba(168, 173, 237);;
+        color: blue;;
         text-decoration: none;
     }
 
@@ -103,14 +103,14 @@
 <body>
 <!-- Main sidebar -->
 <div id="sidebar">
-    <h2>Kategorie</h2>
+    <h2>Kategórie</h2>
     <ul id="category-list">
-        <li><a class="category-link" href="#" data-category="Učebnice pre stredné školy">Učebnice pre stredné školy</a></li>
-        <li><a class="category-link" href="#" data-category="Učebnice pre autoškoly">Učebnice pre autoškoly</a></li>
-        <li><a class="category-link" href="#" data-category="Učebnice pre vysoké školy">Učebnice pre vysoké školy</a></li>
-        <li><a class="category-link" href="#" data-category="Knihy o programovaní">Knihy o programovaní</a></li>
-        <li><a class="category-link" href="#" data-category="Knihy o tvorbe webu">Knihy o tvorbe webu</a></li>
-        <li><a class="category-link" href="#" data-category="Knihy o databázach">Knihy o databázach</a></li>
+        <li><a class="category-link" href="#" data-category="ucebnice pre stredne skoly">Učebnice pre stredné školy</a></li>
+        <li><a class="category-link" href="#" data-category="ucebnice pre autoskoly">Učebnice pre autoškoly</a></li>
+        <li><a class="category-link" href="#" data-category="ucebnice pre vysoke skoly">Učebnice pre vysoké školy</a></li>
+        <li><a class="category-link" href="#" data-category="knihy o programovani">Knihy o programovaní</a></li>
+        <li><a class="category-link" href="#" data-category="knihy o tvorbe webu">Knihy o tvorbe webu</a></li>
+        <li><a class="category-link" href="#" data-category="knihy o databazach">Knihy o databázach</a></li>
     </ul>
 </div>
 <!-- Content section -->
@@ -154,6 +154,11 @@ if(isset($_GET['id'])) {
         return $productDetails;
     }
 
+    // Function to remove diacritics from category names
+    function removeDiacritics($string) {
+        return iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+    }
+
     // Fetch product details
     $productDetails = fetchProductDetails($productId, $conn);
 
@@ -186,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function handleCategoryClick(event) {
         event.preventDefault();
         var category = this.getAttribute("data-category");
-        var baseUrl = window.location.origin + '/lol/'; // Base URL with "/lol/" segment
+        var baseUrl = window.location.origin + '/knihy/'; // Base URL with "/lol/" segment
         var cleanCategory = encodeURIComponent(category.replace(/\s/g, '-')); // Encode and replace spaces with dashes
         var cleanUrl = baseUrl + cleanCategory; // Construct URL with cleaned category
         window.location.href = cleanUrl; // Redirect to the URL
@@ -196,6 +201,11 @@ document.addEventListener("DOMContentLoaded", function() {
     categoryLinks.forEach(function(link) {
         link.addEventListener("click", handleCategoryClick);
     });
+
+    var productTitle = document.querySelector(".product-title");
+    if (productTitle) {
+        document.title = productTitle.innerText;
+    }
 });
 </script>
 </body>

@@ -7,7 +7,7 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        background-color: rgb(220, 222, 250);
+        background-color: rgb(145, 149, 219);
     }
     #sidebar {
         margin-top: 50px;
@@ -18,8 +18,8 @@
         list-style: none;
         border-radius: 15px;
         height: 100vh;
-        border: 1px solid rgba(168, 173, 237,.7);
-        background-color: rgb(240, 241, 250);
+        border: 1px solid rgba(168, 173, 237);
+        background-color: rgb(218, 218, 224);
     }
     #sidebar h2{
         font-size: 2em;
@@ -62,10 +62,10 @@
         gap: 1rem;
         width: 20%;
         height: 20rem;
-        border: 1px solid rgba(168, 173, 237,.7);
+        border: 1px solid rgba(168, 173, 237);
         border-radius: 5px;
         padding: 10px;
-        background-color: rgb(240, 241, 250);
+        background-color: rgb(218, 218, 224);
         text-decoration: none;
     }
 
@@ -113,7 +113,7 @@
 
     #prev-page:hover,
     #next-page:hover {
-        background-color: rgba(168, 173, 237,.5);
+        background-color: rgba(112, 117, 207);
     }
 
     #prev-page:disabled,
@@ -127,14 +127,14 @@
 </head>
 <body>
 <div id="sidebar">
-        <h2>Kategórie</h2>
+        <h2>Kategorie</h2>
         <ul id="category-list">
-            <li><a class="category-link" href="#" data-category="Učebnice pre stredné školy">Učebnice pre stredné školy</a></li>
-            <li><a class="category-link" href="#" data-category="Učebnice pre autoškoly">Učebnice pre autoškoly</a></li>
-            <li><a class="category-link" href="#" data-category="Učebnice pre vysoké školy">Učebnice pre vysoké školy</a></li>
-            <li><a class="category-link" href="#" data-category="Knihy o programovaní">Knihy o programovaní</a></li>
-            <li><a class="category-link" href="#" data-category="Knihy o tvorbe webu">Knihy o tvorbe webu</a></li>
-            <li><a class="category-link" href="#" data-category="Knihy o databázach">Knihy o databázach</a></li>
+            <li><a class="category-link" href="#" data-category="ucebnice pre stredne skoly">Učebnice pre stredné školy</a></li>
+            <li><a class="category-link" href="#" data-category="ucebnice pre autoskoly">Učebnice pre autoškoly</a></li>
+            <li><a class="category-link" href="#" data-category="ucebnice pre vysoke skoly">Učebnice pre vysoké školy</a></li>
+            <li><a class="category-link" href="#" data-category="knihy o programovani">Knihy o programovaní</a></li>
+            <li><a class="category-link" href="#" data-category="knihy o tvorbe webu">Knihy o tvorbe webu</a></li>
+            <li><a class="category-link" href="#" data-category="knihy o databazach">Knihy o databázach</a></li>
         </ul>
     </div>
     <!-- Your HTML content here -->
@@ -187,28 +187,33 @@ document.addEventListener("DOMContentLoaded", function() {
         // Update category title
         var categoryTitle = document.getElementById("category-title");
         if (items.length > 0) {
-            categoryTitle.innerText = categoryFromUrl; // Use the selected category from URL
+            var capitalizedCategory = categoryFromUrl.charAt(0).toUpperCase() + categoryFromUrl.slice(1).toLowerCase();
+            categoryTitle.innerText = capitalizedCategory; // Use the selected category from URL
+            document.title = capitalizedCategory;
         } else {
             categoryTitle.innerText = "No items found for " + categoryFromUrl;
         }
     }
 
-    // Function to handle category link clicks
+// Function to handle category link clicks
     function handleCategoryClick(event) {
         event.preventDefault();
         var category = this.getAttribute("data-category");
+        var capitalizedCategory = category.charAt(0).toUpperCase() + category.slice(1).toLowerCase(); // Capitalize the first letter
         fetchItems(category, currentPage);
-        document.getElementById("category-title").innerText = category;
+        document.getElementById("category-title").innerText = capitalizedCategory;
 
         // Update categoryFromUrl variable
-        categoryFromUrl = category;
+        categoryFromUrl = capitalizedCategory;
+        document.title = capitalizedCategory;
 
         // Construct clean URL with just the category name
-        var baseUrl = window.location.origin + '/lol/'; // Get the base URL with "/lol/" segment
+        var baseUrl = window.location.origin + '/knihy/'; // Get the base URL with "/lol/" segment
         var cleanCategory = encodeURIComponent(category.replace(/\s/g, '-')); // Encode and replace spaces with dashes
         var cleanUrl = baseUrl + cleanCategory; // Combine base URL and cleaned category
         window.history.pushState({}, '', cleanUrl);
     }
+
 
     // Attach event listeners to category links
     categoryLinks.forEach(function(link) {
