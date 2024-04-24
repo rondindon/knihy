@@ -207,6 +207,7 @@ document.addEventListener("DOMContentLoaded", function() {
         categoryFromUrl = capitalizedCategory;
         document.title = capitalizedCategory;
 
+
         // Construct clean URL with just the category name
         var baseUrl = window.location.origin + '/knihy/'; // Get the base URL with "/lol/" segment
         var cleanCategory = encodeURIComponent(category.replace(/\s/g, '-')); // Encode and replace spaces with dashes
