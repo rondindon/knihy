@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 
 // Fetch items from the database for a specific category and limit to 24 items
 function fetchItems($category, $conn) {
-    $sql = "SELECT * FROM knihy WHERE kategoria=? LIMIT 60";
+    $sql = "SELECT * FROM knihy WHERE kategoria=? LIMIT 150";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
         die("Error in prepared statement: " . $conn->error);

@@ -291,7 +291,7 @@
 
     document.getElementById("next-page").addEventListener("click", function() {
         currentPage++;
-        if (currentPage >= 7) {
+        if (currentPage >= 19) {
             currentPage = 1;
         }
         fetchItems(document.getElementById("category-title").innerText, currentPage);
