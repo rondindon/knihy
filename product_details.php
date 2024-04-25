@@ -100,6 +100,10 @@
         font-weight: bold;
     }
 
+    .product-path{
+        align-self: start;
+    }
+
 </style>
 </head>
 <body>
@@ -171,6 +175,7 @@ if(isset($_GET['id'])) {
     if($productDetails) {
         // Display product details
         echo "<div class='product-details'>";
+        echo "<div class='product-path'> <h4>{$productDetails['kategoria']} / {$productDetails['nazov']} </h4> </div>";
         echo "<h2 class='product-title'>{$productDetails['nazov']}</h2>";
         echo "<p class='product-author'>Autor: {$productDetails['autor']}</p>";
         echo "<p class='product-price'>Cena: {$productDetails['cena']} €</p>";

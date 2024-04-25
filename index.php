@@ -151,61 +151,66 @@
         </div>
     </div>
     <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var itemsPerPage = 8; // Number of items per page
-    var currentPage = 1; // Current page number
-    var categoryLinks = document.querySelectorAll(".category-link");
-    var categoryFromUrl; // Variable to store category from URL
-    var fetchedItems; // Variable to store fetched items
 
-// Function to fetch items with the specified category and page number
-// Function to fetch items with the specified category and page number
-// Function to fetch items with the specified category and page number
-function fetchItems(category, page) {
-    console.log("Fetching items for category:", category, "Page:", page); // Log category and page number
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                fetchedItems = JSON.parse(xhr.responseText);
-                displayItems(fetchedItems, page);
-            } else {
-                console.error("Failed to fetch items:", xhr.status);
+    document.addEventListener("DOMContentLoaded", function() {
+        var itemsPerPage = 8; // Number of items per page
+        var currentPage = 1; // Current page number
+        var categoryLinks = document.querySelectorAll(".category-link");
+        var categoryFromUrl; // Variable to store category from URL
+        var fetchedItems; // Variable to store fetched items
+
+
+    function togglePrevButtonVisibility(page) {
+        var prevButton = document.getElementById("prev-page");
+        prevButton.style.display = page === 1 ? "none" : "";
+    }
+
+    function fetchItems(category, page) {
+        console.log("Fetching items for category:", category, "Page:", page); // Log category and page number
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    fetchedItems = JSON.parse(xhr.responseText);
+                    displayItems(fetchedItems, page);
+                } else {
+                    console.error("Failed to fetch items:", xhr.status);
+                }
             }
+        };
+        togglePrevButtonVisibility(page);
+        var url;
+        if (page === 1 && !category) {
+            // If it's the main page and the page number is 1, don't include the page number in the URL
+            url = "fetch_items.php";
+        } else {
+            // Include the page number in the URL for other cases
+            url = "fetch_items.php";
+            var params = [];
+            if (category) {
+                params.push("category=" + encodeURIComponent(category));
+            }
+            if (page && (!category || page !== 1)) {
+                params.push("page=" + encodeURIComponent(page));
+            }
+            url += "?" + params.join("&");
         }
-    };
-    var url;
-    if (page === 1 && !category) {
-        // If it's the main page and the page number is 1, don't include the page number in the URL
-        url = "fetch_items.php";
-    } else {
-        // Include the page number in the URL for other cases
-        url = "fetch_items.php";
-        var params = [];
-        if (category) {
-            params.push("category=" + encodeURIComponent(category));
-        }
-        if (page && (!category || page !== 1)) {
-            params.push("page=" + encodeURIComponent(page));
-        }
-        url += "?" + params.join("&");
-    }
-    console.log("Fetch URL:", url); // Log the fetch URL
-    xhr.open("GET", url, true);
-    xhr.send();
+        console.log("Fetch URL:", url); // Log the fetch URL
+        xhr.open("GET", url, true);
+        xhr.send();
 
-    // Update URL with the current page number if necessary
-    if (page !== 1 || category) {
-        var baseUrl = window.location.origin + '/knihy/';
-        if (category) {
-            baseUrl += encodeURIComponent(category.toLowerCase().replace(/\s/g, '-'));
+        // Update URL with the current page number if necessary
+        if (page !== 1 || category) {
+            var baseUrl = window.location.origin + '/knihy/';
+            if (category) {
+                baseUrl += encodeURIComponent(category.toLowerCase().replace(/\s/g, '-'));
+            }
+            if (page && (!category || page !== 1)) {
+                baseUrl += '?page=' + encodeURIComponent(page);
+            }
+            window.history.pushState({}, '', baseUrl);
         }
-        if (page && (!category || page !== 1)) {
-            baseUrl += '?page=' + encodeURIComponent(page);
-        }
-        window.history.pushState({}, '', baseUrl);
     }
-}
 
     // Function to display items
     function displayItems(items, page) {
@@ -247,6 +252,10 @@ function fetchItems(category, page) {
         event.preventDefault();
         var category = this.getAttribute("data-category");
         var capitalizedCategory = category.charAt(0).toUpperCase() + category.slice(1).toLowerCase(); // Capitalize the first letter
+        
+        // Reset current page to 1 when changing categories
+        currentPage = 1;
+        
         fetchItems(category, currentPage);
         document.getElementById("category-title").innerText = capitalizedCategory;
 
