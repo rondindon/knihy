@@ -12,14 +12,14 @@
     }
     #sidebar {
         margin-top: 50px;
-        max-width: 18rem;
-        width: 20%;
+        min-width: 10rem;
+        width: 15rem;
         float: left;
         background-color: #f4f4f4;
         padding: 20px;
         list-style: none;
         border-radius: 15px;
-        height: 100vh;
+        min-height: 100vh;
         border: 1px solid rgba(168, 173, 237);
         background-color: rgb(218, 218, 224);
     }
