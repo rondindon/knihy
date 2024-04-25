@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="../kniha.ico">
 <title><?php echo isset($productDetails['nazov']) ? $productDetails['nazov'] : 'Product Details'; ?></title>
 <style>
     body {
@@ -23,6 +24,7 @@
     }
     #sidebar h2{
         font-size: 2em;
+        margin: .5rem 0 1.5rem 0;
     }
     #category-list{
         list-style: none;
@@ -103,6 +105,7 @@
 <body>
 <!-- Main sidebar -->
 <div id="sidebar">
+<a href="/knihy/"><img src="../kkniha.png" width=75></a>
     <h2>Kategórie</h2>
     <ul id="category-list">
         <li><a class="category-link" href="#" data-category="ucebnice pre stredne skoly">Učebnice pre stredné školy</a></li>
