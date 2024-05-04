@@ -6,7 +6,6 @@
 <link rel="icon" type="image/x-icon" href="kniha.ico">
 <title>Category Viewer with Pagination</title>
 <style>
-    
     body {
         font-family: Arial, sans-serif;
         background-color: rgb(145, 149, 219);
